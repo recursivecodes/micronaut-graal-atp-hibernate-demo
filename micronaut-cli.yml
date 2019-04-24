@@ -1,0 +1,5 @@
+profile: codes.recursive.service
+defaultPackage: codes.recursive
+---
+testFramework: junit
+sourceLanguage: java
