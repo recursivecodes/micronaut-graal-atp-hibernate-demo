@@ -1,3 +1,9 @@
+buildscript {
+    dependencies {
+        classpath "org.hibernate:hibernate-gradle-plugin:5.4.0.Final"
+    }
+}
+
 plugins {
     id "io.spring.dependency-management" version "1.0.6.RELEASE"
     id "com.github.johnrengelman.shadow" version "4.0.2"
@@ -6,6 +12,8 @@ plugins {
     id "net.ltgt.apt-eclipse" version "0.21"
     id "net.ltgt.apt-idea" version "0.21"
 }
+
+apply plugin: 'org.hibernate.orm'
 
 version "0.1"
 group "codes.recursive"
@@ -30,10 +38,11 @@ configurations {
 dependencies {
     annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor "io.micronaut:micronaut-inject-java"
-    annotationProcessor "io.micronaut:micronaut-validation"
+    compile "io.micronaut:micronaut-validation"
 
     /* Start Hibernate */
     annotationProcessor "javax.persistence:javax.persistence-api:2.2"
+
     compile "io.micronaut.configuration:micronaut-hibernate-jpa", {
         exclude group:'io.micronaut.configuration', module:'micronaut-hibernate-validator'
     }
@@ -70,6 +79,15 @@ test {
 
 shadowJar {
     mergeServiceFiles()
+}
+
+hibernate {
+    enhance {
+        enableLazyInitialization= true
+        enableDirtyTracking = true
+        enableAssociationManagement = true
+        enableExtendedEnhancement = true
+    }
 }
 
 run.classpath += configurations.developmentOnly

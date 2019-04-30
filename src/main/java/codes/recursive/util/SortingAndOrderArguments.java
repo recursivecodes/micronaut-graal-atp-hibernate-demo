@@ -1,11 +1,14 @@
 package codes.recursive.util;
 
+import io.micronaut.core.annotation.Introspected;
+
 import javax.annotation.Nullable;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 import java.util.Optional;
 
+@Introspected
 public class SortingAndOrderArguments {
     @Nullable
     @PositiveOrZero
@@ -69,5 +72,9 @@ public class SortingAndOrderArguments {
 
     public void setOrder(@Nullable String order) {
         this.order = order;
+    }
+
+    public String toString() {
+        return "Sort: " + getSort().orElse("No Sort") + " ,Order: " + getOrder().orElse("No Order") + " ,Max: " + getMax().orElse(null) + " ,Offset: " + getOffset().orElse(null);
     }
 }

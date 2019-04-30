@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="person_hibernate")
-public final class Person {
+public class Person {
     public Person() {}
 
     public Person(String firstName, String lastName, Boolean isCool) {

@@ -38,7 +38,6 @@ public class PersonRepositoryImpl implements PersonRepository {
         TypedQuery<Person> query = entityManager.createQuery(qlString, Person.class);
         query.setMaxResults(args.getMax().orElse(10));
         args.getOffset().ifPresent(query::setFirstResult);
-
         return query.getResultList();
     }
 
