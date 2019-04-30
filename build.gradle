@@ -7,19 +7,18 @@ plugins {
     id "net.ltgt.apt-idea" version "0.21"
 }
 
-
-
 version "0.1"
 group "codes.recursive"
 
 repositories {
     mavenCentral()
     maven { url "https://jcenter.bintray.com" }
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 dependencyManagement {
     imports {
-        mavenBom 'io.micronaut:micronaut-bom:1.1.0'
+        mavenBom 'io.micronaut:micronaut-bom:1.2.0.BUILD-SNAPSHOT'
     }
 }
 
@@ -32,13 +31,22 @@ dependencies {
     annotationProcessor "io.micronaut:micronaut-graal"
     annotationProcessor "io.micronaut:micronaut-inject-java"
     annotationProcessor "io.micronaut:micronaut-validation"
-    
-    compile "io.micronaut.configuration:micronaut-hibernate-jpa"
-    compile "io.micronaut.configuration:micronaut-hibernate-validator"
-    compileOnly "io.micronaut:micronaut-inject-java"
-    compile "io.micronaut.configuration:micronaut-jdbc-hikari"
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    /* Start Hibernate */
+    annotationProcessor "javax.persistence:javax.persistence-api:2.2"
+    compile "io.micronaut.configuration:micronaut-hibernate-jpa", {
+        exclude group:'io.micronaut.configuration', module:'micronaut-hibernate-validator'
+    }
+    compile 'io.micronaut.configuration:micronaut-jdbc-tomcat'
+    implementation fileTree(dir: 'libs', include: ['*.jar']) // local dependencies for ojdbc
+    compile 'xerces:xercesImpl:2.12.0'
+    /* End Hibernate */
+    
+    /* Start OpenAPI */
+    annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+    compile "io.swagger.core.v3:swagger-annotations"
+    /* End OpenAPI */
+    
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut:micronaut-inject"
     compile "io.micronaut:micronaut-validation"

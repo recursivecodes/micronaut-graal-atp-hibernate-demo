@@ -1,6 +1,11 @@
 micronaut:
   application:
     name: micronaut-graal-atp-hibernate-demo
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
 datasources:
   default:
     pooled: true
@@ -15,3 +20,5 @@ jpa:
         hbm2ddl:
           auto: validate
         show_sql: true
+        ejb:
+          use_class_enhancer: true

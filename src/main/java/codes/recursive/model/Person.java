@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="person_hibernate")
-public class Person {
+public final class Person {
     public Person() {}
 
     public Person(String firstName, String lastName, Boolean isCool) {
@@ -17,21 +17,21 @@ public class Person {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    public Long id;
 
     @NotNull
     @Column(name = "first_name", nullable = false, length = 50)
     @Size(min=5, max=50)
-    private String firstName;
+    public String firstName;
 
     @NotNull
     @Column(name = "last_name", nullable = false, length = 50)
     @Size(min=5, max=50)
-    private String lastName;
+    public String lastName;
 
     @NotNull
     @Column(name = "is_cool", nullable = false, length = 50, columnDefinition = "NUMBER(1,0), default 1")
-    private Boolean isCool;
+    public Boolean isCool;
 
     public Boolean getIsCool() {
         return isCool;

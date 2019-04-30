@@ -1,4 +1,5 @@
 package codes.recursive.service;
+
 import codes.recursive.model.Person;
 import codes.recursive.util.SortingAndOrderArguments;
 import io.micronaut.configuration.hibernate.jpa.scope.CurrentSession;
@@ -18,7 +19,7 @@ import java.util.Optional;
 public class PersonRepositoryImpl implements PersonRepository {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    public final EntityManager entityManager;
 
     public PersonRepositoryImpl(@CurrentSession EntityManager entityManager) {
         this.entityManager = entityManager;
