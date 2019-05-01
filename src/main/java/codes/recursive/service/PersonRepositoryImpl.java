@@ -19,7 +19,7 @@ import java.util.Optional;
 public class PersonRepositoryImpl implements PersonRepository {
 
     @PersistenceContext
-    public final EntityManager entityManager;
+    public EntityManager entityManager;
 
     public PersonRepositoryImpl(@CurrentSession EntityManager entityManager) {
         this.entityManager = entityManager;
