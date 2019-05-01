@@ -14,6 +14,7 @@ import oracle.security.crypto.cert.ext.*;
 import oracle.security.crypto.core.*;
 import oracle.security.pki.OraclePKI;
 import oracle.security.pki.OracleSSOKeyStoreSpi;
+import org.apache.tomcat.jdbc.pool.ConnectionPool;
 import org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl;
 import org.hibernate.dialect.Oracle12cDialect;
 import org.hibernate.engine.spi.SharedSessionContractImplementor;
@@ -26,6 +27,8 @@ import org.hibernate.persister.collection.BasicCollectionPersister;
 import org.hibernate.persister.collection.OneToManyPersister;
 import org.hibernate.persister.entity.SingleTableEntityPersister;
 import org.hibernate.query.spi.QueryParameterBindings;
+import org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorBuilderImpl;
+import org.hibernate.resource.transaction.spi.TransactionCoordinatorBuilder;
 import org.hibernate.tuple.entity.EntityMetamodel;
 import org.hibernate.tuple.entity.PojoEntityTuplizer;
 import org.hibernate.type.descriptor.WrapperOptions;
@@ -138,7 +141,10 @@ import java.sql.ResultSet;
         SqlNode.class,
         UnaryArithmeticNode.class,
         UnaryLogicOperatorNode.class,
-        UpdateStatement.class
+        UpdateStatement.class,
+        ConnectionPool.class,
+        JdbcResourceLocalTransactionCoordinatorBuilderImpl.class,
+        TransactionCoordinatorBuilder.class
 }, accessType =  TypeHint.AccessType.ALL_PUBLIC)
 public class Application {
     public static void main(String[] args) {

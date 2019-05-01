@@ -16,6 +16,8 @@ jpa:
       - 'codes.recursive.model'
     properties:
       hibernate:
+        transaction:
+          factory_class: org.hibernate.transaction.JDBCTransactionFactory
         dialect: org.hibernate.dialect.Oracle12cDialect
         hbm2ddl:
           auto: validate

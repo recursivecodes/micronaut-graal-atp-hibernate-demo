@@ -7,8 +7,12 @@ import io.micronaut.context.annotation.EachBean;
 import io.micronaut.context.annotation.Factory;
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.context.annotation.Replaces;
+import org.hibernate.AnnotationException;
 import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.BootstrapServiceRegistry;
+import org.hibernate.boot.registry.BootstrapServiceRegistryBuilder;
 import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.service.ServiceRegistry;
 
 @Factory
 public class NoScanMetadataSourcesFactoryBean {
@@ -24,6 +28,19 @@ public class NoScanMetadataSourcesFactoryBean {
         // It seems we can't scan @Entity with native-image
         MetadataSources metadataSources = new MetadataSources(standardServiceRegistry);
         metadataSources.addAnnotatedClass(Person.class);
+
+        try {
+            metadataSources.buildMetadata();
+        }
+        catch (AnnotationException ignore) {
+        }
+        finally {
+            ServiceRegistry metaServiceRegistry = metadataSources.getServiceRegistry();
+            if(metaServiceRegistry instanceof BootstrapServiceRegistry) {
+                BootstrapServiceRegistryBuilder.destroy( metaServiceRegistry );
+            }
+        }
+
         return metadataSources;
     }
 }
